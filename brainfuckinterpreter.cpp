@@ -5,6 +5,11 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+    if (argc > 2)
+    {
+        cout << "Expected 1 argument found 2";
+        return 1;
+    }
     unsigned char cells[30000];
     char ch;
     for (int i = 0; i < 30000; i++)
