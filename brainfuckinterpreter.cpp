@@ -1,7 +1,11 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include <stdio.h>
 #include <fstream>
 using namespace std;
+
+void performAction(char c){
+    
+}
 
 int main(int argc, char **argv)
 {
@@ -12,6 +16,8 @@ int main(int argc, char **argv)
     }
     unsigned char cells[30000];
     char ch;
+    bool isLooping=false,beginLoop=false;
+    vector<char> loopData;
     for (int i = 0; i < 30000; i++)
         cells[i] = 0;
     int index = 0;
@@ -19,7 +25,14 @@ int main(int argc, char **argv)
     file.open(argv[1]);
     while (!file.eof())
     {
-        file >> ch;
+        if(isLooping){
+            ch=loopData[0];
+            loopData.erase(loopData.begin()); 
+        }
+        else
+            file >> ch;
+        if(beginLoop)
+            loopData.push_back(ch);
         if (file.eof())
             break;
         // cout << ch;
@@ -40,6 +53,20 @@ int main(int argc, char **argv)
             break;
         case ',':
             cells[index] = getchar();
+            break;
+        case '[':
+            if(cells[index]==0)
+                break;
+            beginLoop=true;
+            break;
+        case ']':
+            if(cells[index]==0){
+                isLooping=false;
+                beginLoop=false;
+                loopData.clear();
+                break;
+            }
+            isLooping=true;
             break;
         case '>':
             index++;
